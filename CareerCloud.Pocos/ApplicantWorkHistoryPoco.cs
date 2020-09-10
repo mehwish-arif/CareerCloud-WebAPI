@@ -30,6 +30,12 @@ namespace CareerCloud.Pocos
         [Column("End_Year")]
         public Int32 EndYear { get; set; }
         [Column("Time_Stamp")]
+        [Timestamp]
         public Byte[] TimeStamp { get; set; }
+        [ForeignKey("Applicant")]
+        public virtual ApplicantProfilePoco ApplicantProfiles { get; set; }
+        [ForeignKey("CountryCode")]
+
+        public virtual SystemCountryCodePoco SystemCountryCodes { get; set; }
     }
 }

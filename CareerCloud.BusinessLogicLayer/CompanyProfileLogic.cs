@@ -29,31 +29,39 @@ namespace CareerCloud.BusinessLogicLayer
         protected override void Verify(CompanyProfilePoco[] pocos)
         {
             List<ValidationException> exceptions = new List<ValidationException>();
-            string[] comparison = new string[] { ".ca", ".com", ".biz" };
+          //  string[] comparison = new string[] { ".ca", ".com", ".biz" };
 
-            foreach (CompanyProfilePoco poco in pocos)
-            {
+                  foreach (CompanyProfilePoco poco in pocos)
+         //   {
 
-                foreach (string compare in comparison)
+           //     foreach (string compare in comparison)
                 {
-                    if (string.IsNullOrEmpty(poco.CompanyWebsite) || poco.CompanyWebsite.EndsWith(compare)==false)
+                    if (string.IsNullOrEmpty(poco.CompanyWebsite))
+                     {
+                        exceptions.Add(new ValidationException(600, "CompanyWebsite not"));
+                     }
+                     else if (poco.CompanyWebsite.EndsWith(".ca") || poco.CompanyWebsite.EndsWith(".biz") || poco.CompanyWebsite.EndsWith(".com"))
+                    {
+
+                    }
+                    else
                     {
                         exceptions.Add(new ValidationException(600, "CompanyWebsite Valid websites must end with the following extensions – .ca, .com, .biz"));
-                    }
-                }
-
-                if (string.IsNullOrEmpty(poco.ContactPhone) == false)
-                {
+                    }               
+                
+          
+                  if (string.IsNullOrEmpty(poco.ContactPhone) == false)
+                   {
                     //Match match = Regex.Match(poco.ContactPhone, @"^\d{3}-\d{3}-\d{4}$");
                     if (Regex.IsMatch(poco.ContactPhone, @"^\d{3}-\d{3}-\d{4}$") == false)
                     {
                         exceptions.Add(new ValidationException(601, "Contact Phone must correspond to a valid phone number"));
                     }
-                }
+                    }
                 else if (string.IsNullOrEmpty(poco.ContactPhone) == true)
-                {
+                   {
                     exceptions.Add(new ValidationException(601, "Contact Phone must correspond to a valid phone number"));
-                }
+                    }
                 
                 }
 
